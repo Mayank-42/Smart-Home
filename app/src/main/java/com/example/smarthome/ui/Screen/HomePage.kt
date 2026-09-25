@@ -4,6 +4,7 @@ import android.R.attr.tint
 import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,6 +37,10 @@ import androidx.compose.material.icons.filled.Cable
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
@@ -55,9 +60,9 @@ fun HomePage() {
                 title = {
                     Text(
                       text="My Smart Plugs",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 30.sp,
-                        letterSpacing = 0.3.sp
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 25.sp,
+                        letterSpacing = 0.1.sp
                     )
                 },
                 actions = {
@@ -99,7 +104,7 @@ fun HomePage() {
             Column(modifier=Modifier.fillMaxSize()){
                 Spacer(modifier=Modifier.height(20.dp))
                 conectedApp()
-                Spacer(modifier=Modifier.height(20.dp))
+                Spacer(modifier=Modifier.height(40.dp))
                 ConnetedDevice()
             }
 
@@ -146,15 +151,16 @@ fun conectedApp(){
 
 @Composable
 fun ConnetedDevice(){
+    var iSTogle by rememberSaveable{ mutableStateOf(true) }
     Box(modifier=Modifier.fillMaxWidth()
-        .height(120.dp)
+
         .padding(horizontal = 10.dp)
         .clip(RoundedCornerShape(20.dp))
         .background(Color.White)
         .border(0.dp,Color.White, RoundedCornerShape(20.dp))
         .shadow(20.dp,RoundedCornerShape(20.dp),true,Color.Black,Color.White)
     ){
-        Column(modifier=Modifier.fillMaxSize(),
+        Column(modifier=Modifier.fillMaxWidth().padding(vertical = 20.dp),
             verticalArrangement = Arrangement.Center
         ){
             Row(modifier=Modifier.fillMaxWidth()
@@ -162,12 +168,13 @@ fun ConnetedDevice(){
                 verticalAlignment =Alignment.CenterVertically)
             {
                 Box(modifier=Modifier
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(HomeBlue)
+                    .clip(RoundedCornerShape(15.dp))
+                    .background(if(iSTogle) HomeBlue else Color.Gray)
                 ){
                 Icon(
                     imageVector = Icons.Default.Cable,
                     contentDescription = null,
+                    tint=if(iSTogle) Color.White else Color.Black,
                     modifier=Modifier.padding(10.dp)
                 )
                 }
@@ -184,26 +191,70 @@ fun ConnetedDevice(){
                         fontSize=10.sp
                     )
                 }
-                Box(modifier=Modifier.padding(end=20.dp), contentAlignment = Alignment.CenterEnd){
+                Box(modifier=Modifier.padding(end=20.dp)
+                    .clickable{iSTogle=!iSTogle},
+                    contentAlignment = Alignment.CenterEnd){
                     Box(modifier=Modifier
                         .clip(RoundedCornerShape(30.dp))
-                        .background(HomeBlue),
+                        .background(if(iSTogle) HomeBlue else Color.Gray),
                         contentAlignment = Alignment.CenterEnd
                     ) {
-                        Row(modifier=Modifier.padding(10.dp)){
-                            Text(
-                                text = "On"
-                            )
+                        Row(modifier=Modifier.padding(10.dp)) {
+                            if(!iSTogle) {
+                                Box(
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(30.dp))
+                                        .background(Color.White)
+                                ) {
+                                    Text(
+                                        text = "Of",
+                                        modifier = Modifier.padding(2.dp)
+                                    )
+                                }
+                            }
                             Spacer(modifier = Modifier.width(20.dp))
-
-                            Text(
-                                text = "Of"
-                            )
+                            if(iSTogle) {
+                                Box(
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(30.dp))
+                                        .background(Color.White)
+                                ) {
+                                    Text(
+                                        text = "On",
+                                        fontWeight = FontWeight.Black,
+                                        modifier = Modifier.padding(4.dp)
+                                    )
+                                }
+                            }
                         }
                     }
 
                 }
 
+            }
+            Spacer(modifier=Modifier.height(10.dp))
+            Row(modifier = Modifier.fillMaxWidth().padding(15.dp), verticalAlignment = Alignment.CenterVertically){
+                Text(
+                    text="Updated",
+                    color=Color.Gray
+                )
+                Text(
+                    text="  Just now",
+                    fontWeight = FontWeight.Normal
+                )
+                Spacer(modifier=Modifier.width(60.dp))
+                Text(
+                    text="Test Ofline",
+                    color=Color(0xFFFF9800),
+                    fontWeight = FontWeight.Normal,
+
+                )
+                Spacer(modifier=Modifier.width(20.dp))
+                Text(
+                    text="Control",
+                    color=Color.Blue,
+                    fontWeight = FontWeight.Normal
+                )
             }
         }
 
