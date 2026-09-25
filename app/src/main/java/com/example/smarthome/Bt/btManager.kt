@@ -8,5 +8,10 @@ class btManager(val context: Context) {
 
     val bluetoothAdapter = btmanager.adapter
 
+    fun isBluetoothEnabled(): Boolean {
+        return bluetoothAdapter?.isEnabled == true
+    }
+
+
 
 }

@@ -13,11 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.smarthome.Bt.Repo.BtRepository
 import com.example.smarthome.Bt.ViewModel.BtViewModel
 import com.example.smarthome.Bt.ViewModel.BtViewModelFactory
 import com.example.smarthome.Bt.btManager
 import com.example.smarthome.ui.Screen.HomePage
+import com.example.smarthome.ui.Screen.btPage
+import com.example.smarthome.ui.Screen.connectPage
 import com.example.smarthome.ui.theme.SmartHomeTheme
 
 class MainActivity : ComponentActivity() {
@@ -33,12 +38,25 @@ class MainActivity : ComponentActivity() {
                 val btViewModel: BtViewModel = viewModel(
                     factory = BtViewModelFactory(repository)
                 )
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    HomePage(
+                val navController = rememberNavController()
 
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                NavHost(
+                    navController = navController,
+                    startDestination = "Home"
+                ){
+                    composable("Home"){
+                        HomePage(navController)
+                    }
+                    composable("btFinding"){
+                        btPage(navController,btViewModel)
+                    }
+                    composable("ConnectingPage"){
+                        connectPage(navController)
+                    }
+
                 }
+
+
             }
         }
     }

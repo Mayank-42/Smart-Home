@@ -1,6 +1,10 @@
 package com.example.smarthome.ui.Screen
 
+import android.Manifest
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +29,7 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
@@ -32,12 +37,36 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
+import androidx.navigation.NavController
+import com.example.smarthome.Bt.ViewModel.BtViewModel
 import java.lang.annotation.RetentionPolicy
 
 private val btBlue=Color(0xFF4A5CFF)
 private val btLightBlue=Color(0xFFEAF4FF)
 @Composable
-fun btPage(){
+fun btPage(nav: NavController, btViewModel: BtViewModel){
+
+    val context = LocalContext.current
+
+    val bluetoothPermissionLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+
+            val scanGranted =
+                permissions[Manifest.permission.BLUETOOTH_SCAN] == true
+
+            val connectGranted =
+                permissions[Manifest.permission.BLUETOOTH_CONNECT] == true
+
+            if (scanGranted && connectGranted) {
+
+                if (btViewModel.isBluetoothEnabled()) {
+                    onBluetoothReady()
+                }
+
+            }
+        }
 
     Scaffold(
 
@@ -114,6 +143,7 @@ fun btPage(){
                     contentAlignment = Alignment.BottomCenter
                 ){
                 Box(modifier = Modifier.fillMaxWidth()
+                    .clickable{nav.navigate("ConnectingPage")}
                     .padding(20.dp)
                     .shadow(7.dp,RoundedCornerShape(10.dp))
                     .height(60.dp)
@@ -135,8 +165,8 @@ fun btPage(){
 
 }
 
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-fun showw(){btPage()}
-
-
+//@Preview(showSystemUi = true, showBackground = true)
+//@Composable
+//fun showw(){btPage()}
+//
+//

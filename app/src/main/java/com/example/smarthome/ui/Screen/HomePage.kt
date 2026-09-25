@@ -49,11 +49,12 @@ import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.text.font.FontVariation.weight
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
+import androidx.navigation.NavController
 
 private val HomeBlue=Color(0xFF4A5CFF)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomePage(modifier: Modifier) {
+fun HomePage(nav: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -81,7 +82,7 @@ fun HomePage(modifier: Modifier) {
                         Icon(
                             imageVector = Icons.Default.Add,
                             contentDescription = null,
-                            modifier=Modifier
+                            modifier=Modifier.clickable{nav.navigate("btFinding")}
 //                                .padding(30.dp)
                                 .size(40.dp)
                                 .clip(CircleShape)

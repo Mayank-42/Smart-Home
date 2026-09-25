@@ -16,6 +16,9 @@ class BtRepository(
 
     private val context = btManager.context
 
+    fun isBluetoothEnabled(): Boolean {
+        return btManager.isBluetoothEnabled()
+    }
     private val discoveryReceiver =
         object : BroadcastReceiver() {
             @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)

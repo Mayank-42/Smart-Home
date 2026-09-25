@@ -19,6 +19,9 @@ class BtViewModel(
     fun startDiscovery() {
         repository.startDiscovery()
     }
+    fun isBluetoothEnabled(): Boolean {
+        return repository.isBluetoothEnabled()
+    }
 
     fun stopDiscovery() {
         repository.stopDiscovery()
