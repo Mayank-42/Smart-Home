@@ -53,7 +53,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 private val HomeBlue=Color(0xFF4A5CFF)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomePage() {
+fun HomePage(modifier: Modifier) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -158,7 +158,7 @@ fun ConnetedDevice(){
         .clip(RoundedCornerShape(20.dp))
         .background(Color.White)
         .border(0.dp,Color.White, RoundedCornerShape(20.dp))
-        .shadow(20.dp,RoundedCornerShape(20.dp),true,Color.Black,Color.White)
+        .shadow(20.dp,RoundedCornerShape(20.dp),false,Color.Black,Color.White)
     ){
         Column(modifier=Modifier.fillMaxWidth().padding(vertical = 20.dp),
             verticalArrangement = Arrangement.Center
@@ -233,10 +233,11 @@ fun ConnetedDevice(){
 
             }
             Spacer(modifier=Modifier.height(10.dp))
-            Row(modifier = Modifier.fillMaxWidth().padding(15.dp), verticalAlignment = Alignment.CenterVertically){
+            Row(modifier = Modifier.fillMaxWidth().padding(35.dp), verticalAlignment = Alignment.CenterVertically){
                 Text(
                     text="Updated",
-                    color=Color.Gray
+                    color=Color.Gray,
+                    fontSize = 10.sp
                 )
                 Text(
                     text="  Just now",
@@ -261,8 +262,5 @@ fun ConnetedDevice(){
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun show(){
-    HomePage()
-}
+
+
