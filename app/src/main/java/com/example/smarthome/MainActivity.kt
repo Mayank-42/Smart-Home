@@ -11,6 +11,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.smarthome.Bt.Repo.BtRepository
+import com.example.smarthome.Bt.ViewModel.BtViewModel
+import com.example.smarthome.Bt.ViewModel.BtViewModelFactory
+import com.example.smarthome.Bt.btManager
 import com.example.smarthome.ui.Screen.HomePage
 import com.example.smarthome.ui.theme.SmartHomeTheme
 
@@ -20,6 +26,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SmartHomeTheme {
+                val btManager = btManager(this@MainActivity)
+
+                val repository = BtRepository(btManager)
+
+                val btViewModel: BtViewModel = viewModel(
+                    factory = BtViewModelFactory(repository)
+                )
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     HomePage(
 
