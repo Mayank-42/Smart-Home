@@ -62,7 +62,9 @@ fun btPage(nav: NavController, btViewModel: BtViewModel){
             if (scanGranted && connectGranted) {
 
                 if (btViewModel.isBluetoothEnabled()) {
-                    onBluetoothReady()
+                    if (btViewModel.isBluetoothEnabled()) {
+                        nav.navigate("ConnectingPage")
+                    }
                 }
 
             }
