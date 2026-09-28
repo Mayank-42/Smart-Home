@@ -23,6 +23,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,12 +37,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.smarthome.Bt.ViewModel.BtViewModel
+import kotlin.collections.emptyList
 
 private val HomeBlue=Color(0xFF4A5CFF)
 @Composable
 //fun connectPage(nav: NavController){
-fun connectPage(nav: NavController){
-    var avaliableDevice =""
+fun connectPage(nav: NavController,btVM: BtViewModel){
+
+    LaunchedEffect(Unit) {
+        btVM.startDiscovery()
+    }
+    val devices by btVM.devices.collectAsState(
+        initial = emptyList()
+    )
+
     Scaffold() {
         paddingValues ->
         Box(modifier=Modifier.fillMaxSize()

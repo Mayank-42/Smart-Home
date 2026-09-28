@@ -10,12 +10,14 @@ class BtViewModel(
     private val repository: BtRepository
 ) : ViewModel() {
 
+
     @RequiresPermission(
         allOf = [
             Manifest.permission.BLUETOOTH_SCAN,
             Manifest.permission.BLUETOOTH_CONNECT
         ]
     )
+    val devices = repository.devices
     fun startDiscovery() {
         repository.startDiscovery()
     }

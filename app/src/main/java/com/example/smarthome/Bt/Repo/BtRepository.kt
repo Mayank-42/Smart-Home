@@ -9,6 +9,8 @@ import android.content.IntentFilter
 import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import com.example.smarthome.Bt.btManager
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 
 class BtRepository(
     private val btManager: btManager
@@ -19,6 +21,11 @@ class BtRepository(
     fun isBluetoothEnabled(): Boolean {
         return btManager.isBluetoothEnabled()
     }
+    private val _devices = MutableSharedFlow<BluetoothDevice>(
+        extraBufferCapacity = 10
+    )
+
+    val devices = _devices.asSharedFlow()
     private val discoveryReceiver =
         object : BroadcastReceiver() {
             @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
@@ -37,6 +44,7 @@ class BtRepository(
                             )
 
                         if (device != null) {
+                            _devices.tryEmit(device)
                             println(
                                 "BT DEVICE FOUND: ${device.name} - ${device.address}"
                             )
