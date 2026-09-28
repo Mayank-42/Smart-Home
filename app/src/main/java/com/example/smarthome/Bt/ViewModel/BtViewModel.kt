@@ -1,10 +1,16 @@
 package com.example.smarthome.Bt.ViewModel
 
 import android.Manifest
+import android.bluetooth.BluetoothDevice
 import androidx.annotation.RequiresPermission
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.smarthome.Bt.Repo.BtRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class BtViewModel(
     private val repository: BtRepository
@@ -17,7 +23,22 @@ class BtViewModel(
             Manifest.permission.BLUETOOTH_CONNECT
         ]
     )
-    val devices = repository.devices
+    private val _devices = MutableStateFlow<List<BluetoothDevice>>(emptyList())
+
+    val devices: StateFlow<List<BluetoothDevice>> = _devices.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            repository.devices.collect { device ->
+
+                if (_devices.value.none { it.address == device.address }) {
+                    _devices.value =
+                        _devices.value + device
+                }
+            }
+        }
+    }
+
     fun startDiscovery() {
         repository.startDiscovery()
     }

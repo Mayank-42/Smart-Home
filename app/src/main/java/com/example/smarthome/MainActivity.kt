@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
                         btPage(navController,btViewModel)
                     }
                     composable("ConnectingPage"){
-                        connectPage(navController)
+                        connectPage(navController,btViewModel)
                     }
 
                 }

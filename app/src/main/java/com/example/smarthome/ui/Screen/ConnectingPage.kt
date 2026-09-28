@@ -1,9 +1,12 @@
 package com.example.smarthome.ui.Screen
 
+import android.Manifest
 import android.R.attr.font
 import android.R.attr.text
+import android.bluetooth.BluetoothDevice
 import android.graphics.Paint
 import android.icu.util.ULocale
+import androidx.annotation.RequiresPermission
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -41,6 +44,7 @@ import com.example.smarthome.Bt.ViewModel.BtViewModel
 import kotlin.collections.emptyList
 
 private val HomeBlue=Color(0xFF4A5CFF)
+@RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
 @Composable
 //fun connectPage(nav: NavController){
 fun connectPage(nav: NavController,btVM: BtViewModel){
@@ -96,7 +100,10 @@ fun connectPage(nav: NavController,btVM: BtViewModel){
                     )
                     }
             }
-                btDevices()
+                devices.forEach { device ->
+                    btDevices(device)
+                }
+
 
         }
 
@@ -105,8 +112,9 @@ fun connectPage(nav: NavController,btVM: BtViewModel){
 
 }
 
+@RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
 @Composable
-fun btDevices(){
+fun btDevices(device: BluetoothDevice){
     Box(modifier=Modifier.fillMaxWidth()
         .padding(horizontal = 10.dp)
         .clip(RoundedCornerShape(10.dp))
@@ -124,8 +132,9 @@ fun btDevices(){
                     .clip(RoundedCornerShape(5.dp))
                     .background(Color.Gray)
             )
+
             Text(
-                text="Device Name ",
+                text = device.name?: "Unknown Device",
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp
             )
