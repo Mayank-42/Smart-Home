@@ -23,6 +23,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -43,12 +44,20 @@ import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.navigation.NavController
 import com.example.smarthome.Bt.ViewModel.BtViewModel
+import kotlinx.coroutines.delay
 import java.lang.annotation.RetentionPolicy
 
 private val btBlue=Color(0xFF4A5CFF)
 private val btLightBlue=Color(0xFFEAF4FF)
 @Composable
 fun btPage(nav: NavController, btViewModel: BtViewModel){
+
+    var popMessage by rememberSaveable {mutableStateOf(false) }
+
+    LaunchedEffect(popMessage) {
+        delay(1000)
+        popMessage=false
+    }
 
     val context = LocalContext.current
     var isGranted by rememberSaveable { mutableStateOf(false) }
@@ -69,6 +78,9 @@ fun btPage(nav: NavController, btViewModel: BtViewModel){
                         isGranted=true
                         nav.navigate("ConnectingPage")
                     }
+                else{
+                    popMessage=true
+                }
 
 
             }
@@ -79,6 +91,7 @@ fun btPage(nav: NavController, btViewModel: BtViewModel){
     ) {paddingValues ->
         Box(modifier=Modifier.padding(paddingValues).fillMaxSize()
         ){
+                if(popMessage) popUpmessage()
             Column(modifier=Modifier.fillMaxSize()
             ){
                 Column(modifier=Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 10.dp)){
@@ -180,6 +193,22 @@ fun btPage(nav: NavController, btViewModel: BtViewModel){
         }
     }
 
+}
+@Composable
+fun popUpmessage(){
+    Box(modifier=Modifier.fillMaxWidth()
+        .padding(30.dp)
+        .shadow(10.dp, RoundedCornerShape(20.dp))
+        .clip(RoundedCornerShape(20.dp))
+        .background(Color.White),
+        contentAlignment = Alignment.TopCenter
+    ){
+        Text(
+            text="plz turn on the Bluetooth",
+            fontWeight = FontWeight.ExtraBold,
+            modifier=Modifier.padding(20.dp)
+        )
+    }
 }
 
 //@Preview(showSystemUi = true, showBackground = true)

@@ -156,16 +156,16 @@ fun ConnetedDevice(){
     Box(modifier=Modifier.fillMaxWidth()
 
         .padding(horizontal = 10.dp)
+        .shadow(10.dp,RoundedCornerShape(20.dp))
         .clip(RoundedCornerShape(20.dp))
         .background(Color.White)
         .border(0.dp,Color.White, RoundedCornerShape(20.dp))
-        .shadow(20.dp,RoundedCornerShape(20.dp),false,Color.Black,Color.White)
     ){
         Column(modifier=Modifier.fillMaxWidth().padding(vertical = 20.dp),
             verticalArrangement = Arrangement.Center
         ){
             Row(modifier=Modifier.fillMaxWidth()
-                .padding(start=20.dp),
+                .padding(start=13.dp),
                 verticalAlignment =Alignment.CenterVertically)
             {
                 Box(modifier=Modifier
@@ -234,7 +234,7 @@ fun ConnetedDevice(){
 
             }
             Spacer(modifier=Modifier.height(10.dp))
-            Row(modifier = Modifier.fillMaxWidth().padding(35.dp), verticalAlignment = Alignment.CenterVertically){
+            Row(modifier = Modifier.fillMaxWidth().padding(25.dp), verticalAlignment = Alignment.CenterVertically){
                 Text(
                     text="Updated",
                     color=Color.Gray,
@@ -246,7 +246,7 @@ fun ConnetedDevice(){
                 )
                 Spacer(modifier=Modifier.width(60.dp))
                 Text(
-                    text="Test Ofline",
+                    text="Test Offline",
                     color=Color(0xFFFF9800),
                     fontWeight = FontWeight.Normal,
 
@@ -255,7 +255,8 @@ fun ConnetedDevice(){
                 Text(
                     text="Control",
                     color=Color.Blue,
-                    fontWeight = FontWeight.Normal
+                    fontWeight = FontWeight.Normal,
+                    modifier=Modifier.clickable{}
                 )
             }
         }

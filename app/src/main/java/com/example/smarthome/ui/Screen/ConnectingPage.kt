@@ -38,6 +38,10 @@ fun connectPage(nav: NavController){
     }
 
 }
+
+
+
+
 //@Preview(showBackground = true, showSystemUi = true)
 //@Composable
 //fun showww(){
