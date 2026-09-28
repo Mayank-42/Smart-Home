@@ -91,7 +91,7 @@ fun btPage(nav: NavController, btViewModel: BtViewModel){
     ) {paddingValues ->
         Box(modifier=Modifier.padding(paddingValues).fillMaxSize()
         ){
-                if(popMessage) popUpmessage()
+
             Column(modifier=Modifier.fillMaxSize()
             ){
                 Column(modifier=Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 10.dp)){
@@ -190,6 +190,7 @@ fun btPage(nav: NavController, btViewModel: BtViewModel){
                 }
                 }
             }
+            if(popMessage) popUpmessage()
         }
     }
 
