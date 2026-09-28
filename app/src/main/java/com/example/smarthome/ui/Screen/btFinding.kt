@@ -23,6 +23,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -47,6 +51,7 @@ private val btLightBlue=Color(0xFFEAF4FF)
 fun btPage(nav: NavController, btViewModel: BtViewModel){
 
     val context = LocalContext.current
+    var isGranted by rememberSaveable { mutableStateOf(false) }
 
     val bluetoothPermissionLauncher =
         rememberLauncherForActivityResult(
@@ -60,12 +65,11 @@ fun btPage(nav: NavController, btViewModel: BtViewModel){
                 permissions[Manifest.permission.BLUETOOTH_CONNECT] == true
 
             if (scanGranted && connectGranted) {
-
-                if (btViewModel.isBluetoothEnabled()) {
                     if (btViewModel.isBluetoothEnabled()) {
+                        isGranted=true
                         nav.navigate("ConnectingPage")
                     }
-                }
+
 
             }
         }
@@ -85,7 +89,7 @@ fun btPage(nav: NavController, btViewModel: BtViewModel){
                     )
                     Spacer(modifier=Modifier.height(20.dp))
                     Text(
-                        text="Lets connect your smart Plug to your home Wi-Fi in just a minute .",
+                        text="Lets connect your smart Plug to your home Wi-Fi in just a minute.",
                         fontSize = 17.sp,
                         fontWeight = FontWeight.Light
                     )
@@ -145,7 +149,18 @@ fun btPage(nav: NavController, btViewModel: BtViewModel){
                     contentAlignment = Alignment.BottomCenter
                 ){
                 Box(modifier = Modifier.fillMaxWidth()
-                    .clickable{nav.navigate("ConnectingPage")}
+                    .clickable {
+                        if (!isGranted) {
+                            bluetoothPermissionLauncher.launch(
+                                arrayOf(
+                                    Manifest.permission.BLUETOOTH_SCAN,
+                                    Manifest.permission.BLUETOOTH_CONNECT
+                                )
+                            )
+                        } else {
+                            nav.navigate("ConnectingPage")
+                        }
+                    }
                     .padding(20.dp)
                     .shadow(7.dp,RoundedCornerShape(10.dp))
                     .height(60.dp)
