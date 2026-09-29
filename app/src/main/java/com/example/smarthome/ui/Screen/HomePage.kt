@@ -237,7 +237,7 @@ fun ConnetedDevice(){
 
             }
             Spacer(modifier=Modifier.height(10.dp))
-            Row(modifier = Modifier.fillMaxWidth().padding(25.dp),
+            Row(modifier = Modifier.fillMaxWidth().padding(20.dp),
                 verticalAlignment = Alignment.CenterVertically){
                 Text(
                     text="Updated",
