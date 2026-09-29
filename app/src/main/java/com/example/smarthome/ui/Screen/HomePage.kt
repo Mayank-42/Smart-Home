@@ -1,6 +1,8 @@
 package com.example.smarthome.ui.Screen
 
 import android.R.attr.tint
+import android.telecom.Call.Details.can
+import android.util.Log.w
 import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -50,6 +52,7 @@ import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.text.font.FontVariation.weight
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.navigation.NavController
+import java.lang.ProcessBuilder.Redirect.to
 
 private val HomeBlue=Color(0xFF4A5CFF)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -234,7 +237,8 @@ fun ConnetedDevice(){
 
             }
             Spacer(modifier=Modifier.height(10.dp))
-            Row(modifier = Modifier.fillMaxWidth().padding(25.dp), verticalAlignment = Alignment.CenterVertically){
+            Row(modifier = Modifier.fillMaxWidth().padding(25.dp),
+                verticalAlignment = Alignment.CenterVertically){
                 Text(
                     text="Updated",
                     color=Color.Gray,
@@ -263,6 +267,9 @@ fun ConnetedDevice(){
 
     }
 }
+@Composable
+fun dropBox(){
 
+}
 
 
