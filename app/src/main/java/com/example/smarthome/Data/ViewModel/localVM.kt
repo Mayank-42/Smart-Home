@@ -3,7 +3,7 @@ package com.example.smarthome.Data.ViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.smarthome.Data.Repo.localRepo
-import com.example.smarthome.Data.switches
+import com.example.smarthome.Data.Tables.switches
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 

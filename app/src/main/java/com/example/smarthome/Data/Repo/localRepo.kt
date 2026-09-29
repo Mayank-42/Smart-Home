@@ -1,7 +1,7 @@
 package com.example.smarthome.Data.Repo
 
 import com.example.smarthome.Data.operation
-import com.example.smarthome.Data.switches
+import com.example.smarthome.Data.Tables.switches
 
 class localRepo(private val work: operation){
 

@@ -1,4 +1,4 @@
-package com.example.smarthome.Data
+package com.example.smarthome.Data.Tables
 
 import androidx.room.Entity
 

@@ -1,9 +1,9 @@
 package com.example.smarthome.Data
 
-import android.widget.Switch
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.example.smarthome.Data.Tables.switches
 import kotlinx.coroutines.flow.Flow
 
 @Dao
